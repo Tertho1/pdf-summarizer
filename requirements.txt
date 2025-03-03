@@ -1,0 +1,7 @@
+pymupdf 
+pytesseract 
+pdf2image 
+easyocr 
+Pillow 
+torch
+transformers
