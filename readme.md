@@ -106,3 +106,4 @@ pdf-summarizer/
 │── requirements.txt     # Required Python packages
 │── README.md            # Project documentation
 ```
+Any contribution is appreciated.
