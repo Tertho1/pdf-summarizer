@@ -1,24 +1,17 @@
-import sys
-from text_extractor import extract_text
-from summarizer import summarize_text
-import re
+from transformers import pipeline
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python main.py <pdf_file>")
-        sys.exit(1)
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
-    pdf_path = sys.argv[1]
+def summarize_text(text, max_length=150, min_length=50):
+    if not text.strip():
+        return "No text found to summarize."
 
-    print("\nExtracting text from:", pdf_path)
-    extracted_text = extract_text(pdf_path)
-    extracted_text = re.sub(r"\s+", " ", extracted_text)
-
-    print("\nSummarizing...\n")
-    summary = summarize_text(extracted_text)
-
-    print("\nSummary:\n")
-    print("\n".join(summary.split(". ")))
-
-if __name__ == "__main__":
-    main()
+    chunk_size = 800
+    chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+    
+    summary = []
+    for chunk in chunks:
+        summarized_chunk = summarizer(chunk, max_length=max_length, min_length=min_length, do_sample=False)[0]['summary_text']
+        summary.append(summarized_chunk)
+    
+    return " ".join(summary)
