@@ -3,7 +3,6 @@ from text_extractor import extract_text
 from summarizer import summarize_text
 import re
 
-
 def main():
     if len(sys.argv) < 2:
         print("Usage: python main.py <pdf_file>")
@@ -19,8 +18,7 @@ def main():
     summary = summarize_text(extracted_text)
 
     print("\nSummary:\n")
-    print("\n".join(summary.split(". ")))  # Print each sentence on a new line
-
+    print("\n".join(summary.split(". ")))
 
 if __name__ == "__main__":
     main()
